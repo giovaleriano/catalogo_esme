@@ -1,0 +1,504 @@
+/* =========================================================
+   ESME — Catálogo de Joias & Semijoias
+   Tokens de design
+========================================================= */
+:root{
+  --cream:        #F7EEE0;
+  --cream-deep:   #EFE1C8;
+  --white:        #FFFFFF;
+  --terracotta:   #C97B52;
+  --gold-dark:    #9C7A45;
+  --gold:         #B8935B;
+  --gold-light:   #D9BD8E;
+  --brown-text:   #4A3626;
+  --brown-deep:   #2E2015;
+
+  --font-script:  'Alex Brush', cursive;
+  --font-display: 'Playfair Display', serif;
+  --font-body:    'Lora', serif;
+  --font-label:   'Poppins', sans-serif;
+
+  --gap: clamp(1.5rem, 3vw, 3rem);
+}
+
+*{ box-sizing: border-box; }
+
+html{ scroll-behavior: smooth; }
+
+body{
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--cream);
+  color: var(--brown-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* =========================================================
+   CAPA
+========================================================= */
+.cover{
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 85% 0%,  #E0956B 0%, transparent 55%),
+    radial-gradient(120% 90% at 10% 100%, #C97B52 0%, transparent 60%),
+    linear-gradient(160deg, #E8CFA0 0%, #DDB47E 45%, #C9975F 100%);
+  color: var(--white);
+}
+
+.cover__grain{
+  position: absolute;
+  inset: 0;
+  opacity: .18;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.cover__content{
+  position: relative;
+  z-index: 1;
+  padding: 2rem;
+}
+
+.cover__year{
+  display: block;
+  font-family: var(--font-label);
+  font-size: .8rem;
+  letter-spacing: .5em;
+  margin-bottom: 2.5rem;
+  opacity: .9;
+}
+
+.cover__logo{
+  font-family: var(--font-script);
+  font-size: clamp(3rem, 9vw, 5.5rem);
+  font-weight: 400;
+  margin: 0 0 -1rem;
+  line-height: 1;
+}
+
+.cover__title{
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(3rem, 10vw, 6rem);
+  margin: 0;
+  letter-spacing: .01em;
+}
+
+.cover__subtitle{
+  font-family: var(--font-label);
+  font-size: .95rem;
+  letter-spacing: .45em;
+  margin: 1.75rem 0 0;
+  text-transform: uppercase;
+}
+
+.cover__handle{
+  display: block;
+  margin-top: 5rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  opacity: .95;
+}
+
+.cover__scroll{
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-label);
+  font-size: .7rem;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  opacity: .8;
+  animation: bob 2.4s ease-in-out infinite;
+}
+
+@keyframes bob{
+  0%, 100%{ transform: translate(-50%, 0); }
+  50%{ transform: translate(-50%, 8px); }
+}
+
+/* =========================================================
+   CATÁLOGO — grid alternado
+========================================================= */
+.catalog{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(3rem, 8vw, 6rem) var(--gap) 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 6vw, 5rem);
+}
+
+.product{
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: var(--gap);
+  align-items: center;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+
+.product.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.product--reverse{
+  grid-template-columns: .9fr 1.1fr;
+}
+
+.product--reverse .info-card{ order: 1; }
+.product--reverse .flip-card{ order: 2; }
+
+/* ---------- cartão de informações ---------- */
+.info-card{
+  background: var(--white);
+  border-left: 10px solid var(--gold-light);
+  padding: clamp(1.75rem, 3vw, 2.75rem);
+  box-shadow: 0 18px 40px -22px rgba(46, 32, 21, .35);
+}
+
+.info-card h3{
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+  color: var(--gold-dark);
+  margin: 0 0 .35rem;
+}
+
+.info-card__material{
+  font-family: var(--font-label);
+  font-size: .8rem;
+  letter-spacing: .08em;
+  color: var(--brown-text);
+  opacity: .75;
+  margin: 0 0 1.25rem;
+}
+
+.info-card__desc{
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  margin: 0 0 1.75rem;
+  color: var(--brown-text);
+}
+
+.info-card__price{
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--gold-dark);
+  margin: 0;
+}
+
+/* =========================================================
+   FLIP CARD — toque para ver frente / verso
+========================================================= */
+.flip-card{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  perspective: 1600px;
+  cursor: pointer;
+  border-radius: 4px;
+  outline-offset: 6px;
+}
+
+.flip-card:focus-visible{
+  outline: 2px solid var(--gold-dark);
+}
+
+.flip-card-inner{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform .7s cubic-bezier(.4, .2, .2, 1);
+  transform-style: preserve-3d;
+}
+
+.flip-card.is-flipped .flip-card-inner{
+  transform: rotateY(180deg);
+}
+
+.flip-card-face{
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flip-card-face img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.flip-card-back{
+  transform: rotateY(180deg);
+}
+
+/* ---------- placeholders (trocar por <img> reais) ---------- */
+.placeholder{
+  flex-direction: column;
+  gap: 1rem;
+  color: var(--white);
+}
+
+.placeholder__icon{
+  width: 30%;
+  height: auto;
+  opacity: .85;
+}
+
+.placeholder--a{     background: linear-gradient(150deg, #D9B98A, #B8935B); }
+.placeholder--a-back{background: linear-gradient(150deg, #C9A468, #9C7A45); }
+.placeholder--b{     background: linear-gradient(150deg, #E0BE96, #C97B52); }
+.placeholder--b-back{background: linear-gradient(150deg, #CE9A6B, #A6683F); }
+.placeholder--c{     background: linear-gradient(150deg, #EAD2A6, #C9975F); }
+.placeholder--c-back{background: linear-gradient(150deg, #D3AC79, #A9803F); }
+.placeholder--d{     background: linear-gradient(150deg, #D6B487, #A97F4C); }
+.placeholder--d-back{background: linear-gradient(150deg, #C29E68, #8F6A3B); }
+
+.flip-hint{
+  font-family: var(--font-label);
+  font-size: .72rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: .4rem .9rem;
+  border: 1px solid rgba(255,255,255,.6);
+  border-radius: 999px;
+  opacity: .95;
+}
+
+/* pequeno pulso na primeira carta para sugerir a interação */
+.product:first-of-type .flip-card:not(.is-flipped){
+  animation: hint-pulse 2.4s ease-in-out 1.2s 2;
+}
+
+@keyframes hint-pulse{
+  0%, 100%{ transform: scale(1); }
+  50%{ transform: scale(1.015); }
+}
+
+/* =========================================================
+   EDITORIAL — fotos de modelo full-bleed
+========================================================= */
+.editorial{
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  min-height: 78vh;
+  display: grid;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+
+.editorial.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.editorial__media{
+  position: relative;
+  overflow: hidden;
+}
+
+.editorial__media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.editorial__placeholder{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 78vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.editorial__placeholder--1{ background: radial-gradient(120% 100% at 30% 20%, #E4B27F 0%, #B8935B 55%, #7C5B34 100%); }
+.editorial__placeholder--2{ background: radial-gradient(120% 100% at 70% 15%, #DDA36E 0%, #C97B52 55%, #7A4A2C 100%); }
+.editorial__placeholder--3{ background: linear-gradient(150deg, #D9B98A, #A9803F); min-height: 0; aspect-ratio: 1/1; }
+.editorial__placeholder--4{ background: linear-gradient(150deg, #E0BE96, #9C7A45); min-height: 0; aspect-ratio: 1/1; }
+
+.editorial__monogram{
+  font-family: var(--font-script);
+  font-size: clamp(6rem, 14vw, 11rem);
+  color: rgba(255,255,255,.28);
+  line-height: 1;
+}
+
+.editorial__caption{
+  position: absolute;
+  left: clamp(1.5rem, 6vw, 6rem);
+  bottom: clamp(2rem, 6vw, 4rem);
+  z-index: 2;
+  color: var(--white);
+  max-width: 420px;
+}
+
+.editorial__eyebrow{
+  display: block;
+  font-family: var(--font-label);
+  font-size: .72rem;
+  letter-spacing: .35em;
+  text-transform: uppercase;
+  opacity: .85;
+  margin-bottom: .75rem;
+}
+
+.editorial__quote{
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+  line-height: 1.25;
+  margin: 0 0 1.25rem;
+}
+
+.editorial__tags{
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+}
+
+.editorial__tag{
+  font-family: var(--font-label);
+  font-size: .72rem;
+  letter-spacing: .06em;
+  padding: .45rem 1rem;
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: 999px;
+  backdrop-filter: blur(2px);
+}
+
+/* variante em colagem: foto grande + duas fotos de detalhe */
+.editorial--collage{
+  grid-template-columns: 1.6fr 1fr;
+}
+
+.editorial__side{
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 4px;
+}
+
+.editorial--collage .editorial__media--main{
+  min-height: 78vh;
+}
+
+.editorial__caption--collage{
+  right: clamp(1.5rem, 6vw, 4rem);
+  left: auto;
+  bottom: clamp(2rem, 6vw, 4rem);
+  text-align: right;
+}
+
+.editorial__caption--collage .editorial__tags{
+  justify-content: flex-end;
+}
+
+@media (max-width: 760px){
+  .editorial,
+  .editorial--collage{
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .editorial__placeholder,
+  .editorial--collage .editorial__media--main{
+    min-height: 60vh;
+  }
+  .editorial__side{
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: none;
+  }
+  .editorial__side .editorial__placeholder{
+    aspect-ratio: 1/1;
+  }
+  .editorial__caption--collage{
+    position: static;
+    text-align: left;
+    color: var(--brown-text);
+    max-width: none;
+    padding: 1.75rem clamp(1.5rem, 6vw, 3rem) 0;
+  }
+  .editorial__caption--collage .editorial__tags{
+    justify-content: flex-start;
+  }
+  .editorial__caption--collage .editorial__eyebrow{
+    color: var(--gold-dark);
+    opacity: 1;
+  }
+  .editorial__caption--collage .editorial__tag{
+    border-color: var(--gold);
+    color: var(--brown-text);
+  }
+}
+
+/* =========================================================
+   RODAPÉ
+========================================================= */
+.site-footer{
+  text-align: center;
+  padding: 3rem 1rem 4rem;
+  color: var(--brown-text);
+}
+
+.site-footer__logo{
+  font-family: var(--font-script);
+  font-size: 2rem;
+  color: var(--gold-dark);
+  margin: 0 0 .35rem;
+}
+
+.site-footer p{
+  font-family: var(--font-label);
+  font-size: .8rem;
+  letter-spacing: .15em;
+  margin: 0;
+  opacity: .8;
+}
+
+/* =========================================================
+   RESPONSIVO
+========================================================= */
+@media (max-width: 760px){
+  .product,
+  .product--reverse{
+    grid-template-columns: 1fr;
+  }
+  .product--reverse .info-card,
+  .product--reverse .flip-card{
+    order: initial;
+  }
+  .flip-card{ aspect-ratio: 1 / 1; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
